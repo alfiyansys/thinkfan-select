@@ -1,0 +1,6 @@
+#!/bin/bash
+
+unlink /etc/thinkfan.conf
+ln -s /etc/thinkfan-select/default.conf /etc/thinkfan.conf
+
+systemctl restart thinkfan
