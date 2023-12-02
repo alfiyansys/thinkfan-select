@@ -9,7 +9,7 @@ thinkfan_config="$1"
 
 if [ -f "/etc/thinkfan-select/$thinkfan_config.conf" ]; then
 	echo "Configuration found, creating symlink..."
-	ln -sf /etc/thinkfan-select/default.conf /etc/thinkfan.conf
+	ln -sf /etc/thinkfan-select/$thinkfan_config.conf /etc/thinkfan.conf
 	systemctl restart thinkfan
 else
 	echo "Configuration not found, please choose existing configs."
