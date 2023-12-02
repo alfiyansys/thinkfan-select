@@ -1,5 +1,17 @@
 #!/bin/bash
 
-ln -sf /etc/thinkfan-select/default.conf /etc/thinkfan.conf
+if [[ $EUID -ne 0 ]]; then
+   echo "This script must be run as root" 1>&2
+   exit 1
+fi
 
-systemctl restart thinkfan
+thinkfan_config="$1"
+
+if [ -f "/etc/thinkfan-select/$thinkfan_config.conf" ]; then
+	echo "Configuration found, creating symlink..."
+	ln -sf /etc/thinkfan-select/default.conf /etc/thinkfan.conf
+	systemctl restart thinkfan
+else
+	echo "Configuration not found, please choose existing configs."
+	ls /etc/thinkfan-select/*.conf | sed -r 's/^.+\///' | sed 's/\.conf$//'
+fi
